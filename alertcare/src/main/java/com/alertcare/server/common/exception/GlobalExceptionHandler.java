@@ -9,6 +9,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    @ExceptionHandler(UserException.class)
+    public ResponseEntity<BasicResponse<Void>> handleUserException(UserException ex) {
+        return ResponseEntity
+                .status(ex.getStatus())
+                .body(BasicResponse.error(ex.getStatus(), ex.getMessage()));
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<BasicResponse<Void>> handleGenericException(Exception ex) {
