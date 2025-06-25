@@ -2,6 +2,7 @@ package com.alertcare.server.user.service;
 
 import com.alertcare.server.user.domain.User;
 import com.alertcare.server.user.dto.LoginDTO;
+import com.alertcare.server.user.dto.ProfileRequestDTO;
 import com.alertcare.server.user.dto.SignUpDTO;
 import com.alertcare.server.user.exception.UserErrorCode;
 import com.alertcare.server.user.exception.UserException;
@@ -45,5 +46,10 @@ public class UserService {
         } else {
             throw new UserException(UserErrorCode.MEMBER_NOT_FOUND);
         }
+    }
+
+    public User getProfile(ProfileRequestDTO profileRequestDTO) {
+        return userRepository.findByCareReceiverPhoneNumber(profileRequestDTO.getCareReceiverPhoneNumber())
+                .orElseThrow(() -> new UserException(UserErrorCode.MEMBER_NOT_FOUND));
     }
 }

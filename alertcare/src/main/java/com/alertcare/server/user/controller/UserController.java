@@ -31,4 +31,12 @@ public class UserController {
 
         return BasicResponse.success(200, "로그인 성공", user);
     }
+
+    @GetMapping("/profile")
+    @ResponseStatus(HttpStatus.OK)
+    public BasicResponse<User> getProfile(@RequestBody ProfileRequestDTO profileRequestDTO) {
+        User user = userService.getProfile(profileRequestDTO);
+
+        return BasicResponse.success(200, "유저 조회 성공", user);
+    }
 }
