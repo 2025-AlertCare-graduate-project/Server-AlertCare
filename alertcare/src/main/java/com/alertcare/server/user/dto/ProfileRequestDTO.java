@@ -5,9 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class LoginDTO {
-    private String careGiverName;
-    private String careReceiverName;
+public class ProfileRequestDTO {
     private String careReceiverPhoneNumber;
-    private int careReceiverAge;
 }
