@@ -11,7 +11,7 @@ import lombok.*;
 @Builder
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -20,7 +20,7 @@ public class User {
     @Column(nullable = false)
     private String careReceiverName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String careReceiverPhoneNumber;
 
     @Column(nullable = false)
