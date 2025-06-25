@@ -4,6 +4,7 @@ import com.alertcare.server.common.response.BasicResponse;
 import com.alertcare.server.user.domain.User;
 import com.alertcare.server.user.dto.LoginRequestDTO;
 import com.alertcare.server.user.dto.ProfileRequestDTO;
+import com.alertcare.server.user.dto.SignOutReqestDTO;
 import com.alertcare.server.user.dto.SignUpRequestDTO;
 import com.alertcare.server.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -37,5 +38,13 @@ public class UserController {
         User user = userService.getProfile(profileRequestDTO);
 
         return BasicResponse.success(200, "유저 조회 성공", user);
+    }
+
+    @DeleteMapping("/signout")
+    @ResponseStatus(HttpStatus.OK)
+    public BasicResponse<Void> signOut(@RequestBody SignOutReqestDTO signOutReqestDTO) {
+        userService.deleteUser(signOutReqestDTO);
+
+        return BasicResponse.success(200, "탈퇴 성공", null);
     }
 }
