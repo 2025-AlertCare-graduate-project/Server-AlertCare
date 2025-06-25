@@ -1,5 +1,6 @@
 package com.alertcare.server.user.controller;
 
+import com.alertcare.server.common.response.BasicResponse;
 import com.alertcare.server.user.domain.User;
 import com.alertcare.server.user.dto.LoginDTO;
 import com.alertcare.server.user.dto.SignUpDTO;
@@ -16,19 +17,17 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<User> signUp(@RequestBody SignUpDTO signUpDTO) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public BasicResponse<User> signUp(@RequestBody SignUpDTO signUpDTO) {
         User createdUser = userService.signUp(signUpDTO);
-        return ResponseEntity.ok(createdUser);
+        return BasicResponse.success(201, "유저 생성 성공", createdUser);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody LoginDTO loginDTO) {
+    @ResponseStatus(HttpStatus.OK)
+    public BasicResponse<User> login(@RequestBody LoginDTO loginDTO) {
         User user = userService.login(loginDTO);
 
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        } else {
-            return ResponseEntity.ok(user);
-        }
+        return  BasicResponse.success(200, "유저 조회 성공", user);
     }
 }
