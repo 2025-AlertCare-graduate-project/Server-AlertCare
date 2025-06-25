@@ -20,7 +20,7 @@ public class User {
     @Column(nullable = false)
     private String careReceiverName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String careReceiverPhoneNumber;
 
     @Column(nullable = false)
