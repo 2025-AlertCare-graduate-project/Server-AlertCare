@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class AlertcareApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AlertcareApplication.class, args);
-    }
 
+        SpringApplication.run(AlertcareApplication.class, args);
+
+
+    }
 }

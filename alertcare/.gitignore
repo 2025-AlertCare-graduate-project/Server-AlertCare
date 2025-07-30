@@ -39,3 +39,5 @@ out/
 ### 추가 ###
 *.properties
 *.yml
+
+src/main/resources/firebase/
