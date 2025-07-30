@@ -5,12 +5,15 @@ import com.alertcare.server.user.exception.UserErrorCode;
 import com.alertcare.server.user.exception.UserException;
 import com.alertcare.server.user.repository.UserRepository;
 import com.alertcare.server.video.domain.Video;
+import com.alertcare.server.video.dto.VideoListResponseDto;
 import com.alertcare.server.video.dto.VideoRequestDto;
 import com.alertcare.server.video.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
