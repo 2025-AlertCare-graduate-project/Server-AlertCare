@@ -1,5 +1,6 @@
 package com.alertcare.server.common.response;
 
+import com.alertcare.server.fcm.controller.enums.ResponseMessage;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
@@ -20,6 +21,16 @@ public class BasicResponse<T> {
                 .status("success")
                 .code(code)
                 .message(message)
+                .data(data)
+                .build();
+    }
+
+    // ResponseMessage 기반 success 메서드
+    public static <T> BasicResponse<T> success(ResponseMessage responseMessage, T data) {
+        return BasicResponse.<T>builder()
+                .status("success")
+                .code(responseMessage.getStatus())
+                .message(responseMessage.getMessage())
                 .data(data)
                 .build();
     }

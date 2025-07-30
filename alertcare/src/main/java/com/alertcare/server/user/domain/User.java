@@ -1,7 +1,16 @@
 package com.alertcare.server.user.domain;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -27,4 +36,7 @@ public class User {
 
     @Column(name = "care_receiver_age", nullable = false)
     private int careReceiverAge;
+
+    @Column(unique = true)
+    private String fcmToken;
 }
