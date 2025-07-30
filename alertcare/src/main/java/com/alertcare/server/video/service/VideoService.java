@@ -41,6 +41,8 @@ public class VideoService {
     }
 
     public List<VideoListResponseDto> getVideoList(String phoneNumber) {
+        disableExpiredVideo();
+
         User user = userRepository.findByCareReceiverPhoneNumber(phoneNumber)
                 .orElseThrow(() -> new UserException(UserErrorCode.MEMBER_NOT_FOUND));
 
@@ -84,17 +86,21 @@ public class VideoService {
         return new VideoCheckResponseDto(video.getId(), video.isCheckedByUser());
     }
 
-    @Scheduled(cron = "0 0 * * * *") // 매 정각마다 실행 (1시간 간격)
+    @Scheduled(cron = "0 0 * * * *") // 매 정각마다 실행
     public void disableExpiredVideoAccess() {
-        System.out.println("🔔 Scheduled task started: disableExpiredVideoAccess()");
+        disableExpiredVideo();
+    }
+
+    private void disableExpiredVideo() {
         LocalDateTime threshold = LocalDateTime.now().minusHours(12);
         List<Video> expiredVideos = videoRepository.findVideosToDisable(threshold);
 
         for (Video video : expiredVideos) {
             video.disableAccess();
         }
-        System.out.println("✅ {} videos disabled."+ expiredVideos.size());
 
-        videoRepository.saveAll(expiredVideos);
+        if (!expiredVideos.isEmpty()) {
+            videoRepository.saveAll(expiredVideos);
+        }
     }
 }
