@@ -35,6 +35,10 @@ public class Video {
         this.isCheckedByUser = true;
     }
 
+    public void disableAccess() {
+        this.isVideoAccessible = false;
+    }
+
     @Builder
     public Video(String fallDetectVideoUrl, LocalDateTime fallDetectTime, boolean isVideoAccessible, boolean isCheckedByUser, User user) {
         this.fallDetectVideoUrl = fallDetectVideoUrl;

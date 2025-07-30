@@ -12,6 +12,7 @@ import com.alertcare.server.video.exception.VideoErrorCode;
 import com.alertcare.server.video.exception.VideoException;
 import com.alertcare.server.video.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -81,5 +82,19 @@ public class VideoService {
         videoRepository.save(video);
 
         return new VideoCheckResponseDto(video.getId(), video.isCheckedByUser());
+    }
+
+    @Scheduled(cron = "0 0 * * * *") // 매 정각마다 실행 (1시간 간격)
+    public void disableExpiredVideoAccess() {
+        System.out.println("🔔 Scheduled task started: disableExpiredVideoAccess()");
+        LocalDateTime threshold = LocalDateTime.now().minusHours(12);
+        List<Video> expiredVideos = videoRepository.findVideosToDisable(threshold);
+
+        for (Video video : expiredVideos) {
+            video.disableAccess();
+        }
+        System.out.println("✅ {} videos disabled."+ expiredVideos.size());
+
+        videoRepository.saveAll(expiredVideos);
     }
 }
