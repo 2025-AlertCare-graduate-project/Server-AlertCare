@@ -7,6 +7,8 @@ import com.alertcare.server.user.repository.UserRepository;
 import com.alertcare.server.video.domain.Video;
 import com.alertcare.server.video.dto.VideoListResponseDto;
 import com.alertcare.server.video.dto.VideoRequestDto;
+import com.alertcare.server.video.exception.VideoErrorCode;
+import com.alertcare.server.video.exception.VideoException;
 import com.alertcare.server.video.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -56,21 +58,15 @@ public class VideoService {
 
     public String getVideoUrl(Long id){
         Video video = videoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("영상이 존재하지 않습니다."));
+                .orElseThrow(() -> new VideoException(VideoErrorCode.VIDEO_NOT_FOUND));
 
         LocalDateTime fallTime = video.getFallDetectTime();
         LocalDateTime now = LocalDateTime.now();
 
         Duration duration = Duration.between(fallTime, now);
 
-        System.out.println("===== Video 조회 요청 =====");
-        System.out.println("현재 시간: " + now);
-        System.out.println("fallDetectTime: " + fallTime);
-        System.out.println("두 시간 차이(시간 단위): " + duration.toHours());
-
-
         if (duration.toHours() >= 12) {
-            throw new RuntimeException("접근 권한이 만료되었습니다.");
+            throw new VideoException(VideoErrorCode.VIDEO_ACCESS_EXPIRED);
         }
 
         return video.getFallDetectVideoUrl();
