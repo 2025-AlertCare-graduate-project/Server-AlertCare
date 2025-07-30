@@ -25,15 +25,18 @@ public class Video {
 
     private boolean isVideoAccessible;
 
+    private boolean isCheckedByUser;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Builder
-    public Video(String fallDetectVideoUrl, LocalDateTime fallDetectTime, boolean isVideoAccessible, User user) {
+    public Video(String fallDetectVideoUrl, LocalDateTime fallDetectTime, boolean isVideoAccessible, boolean isCheckedByUser, User user) {
         this.fallDetectVideoUrl = fallDetectVideoUrl;
         this.fallDetectTime = fallDetectTime;
         this.isVideoAccessible = true;
+        this.isCheckedByUser = isCheckedByUser;
         this.user = user;
     }
 }

@@ -19,6 +19,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<BasicResponse<Void>> handleGenericException(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(BasicResponse.error(500, "서버 내부 오류"));
+                .body(BasicResponse.error(500, ex.toString()));
     }
 }
