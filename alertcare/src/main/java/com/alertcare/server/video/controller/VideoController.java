@@ -28,4 +28,15 @@ public class VideoController {
         return BasicResponse.success(200, "비디오 리스트 조회 성공", videoService.getVideoList(phoneNumber));
     }
 
+    @GetMapping("/{id}")
+    public BasicResponse<String> getVideo(@PathVariable Long id) {
+        try {
+            String videoUrl = videoService.getVideoUrl(id);
+            return BasicResponse.success(200, "영상 조회 성공", videoUrl);
+        } catch (RuntimeException e) {
+            return BasicResponse.error(403, e.getMessage());
+        }
+    }
+
+
 }
