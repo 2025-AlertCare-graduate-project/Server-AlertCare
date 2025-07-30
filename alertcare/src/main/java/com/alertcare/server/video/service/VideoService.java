@@ -11,6 +11,7 @@ import com.alertcare.server.video.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,5 +52,27 @@ public class VideoService {
                     );
                 })
                 .collect(Collectors.toList());
+    }
+
+    public String getVideoUrl(Long id){
+        Video video = videoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("영상이 존재하지 않습니다."));
+
+        LocalDateTime fallTime = video.getFallDetectTime();
+        LocalDateTime now = LocalDateTime.now();
+
+        Duration duration = Duration.between(fallTime, now);
+
+        System.out.println("===== Video 조회 요청 =====");
+        System.out.println("현재 시간: " + now);
+        System.out.println("fallDetectTime: " + fallTime);
+        System.out.println("두 시간 차이(시간 단위): " + duration.toHours());
+
+
+        if (duration.toHours() >= 12) {
+            throw new RuntimeException("접근 권한이 만료되었습니다.");
+        }
+
+        return video.getFallDetectVideoUrl();
     }
 }
