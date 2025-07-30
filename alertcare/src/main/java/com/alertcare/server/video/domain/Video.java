@@ -1,9 +1,8 @@
 package com.alertcare.server.video.domain;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.alertcare.server.user.domain.User;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,22 +12,28 @@ import java.time.LocalDateTime;
 @Getter
 @Entity
 @NoArgsConstructor
+@Table(name = "Video")
 public class Video {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String videoUrl;
+    private String fallDetectVideoUrl;
 
-    private boolean fallDetected;
+    private LocalDateTime fallDetectTime;
 
-    private LocalDateTime createdAt;
+    private boolean isVideoAccessible;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Builder
-    public Video(String videoUrl, boolean fallDetected, LocalDateTime createdAt){
-        this.videoUrl = videoUrl;
-        this.fallDetected = fallDetected;
-        this.createdAt = createdAt;
+    public Video(String fallDetectVideoUrl, LocalDateTime fallDetectTime, boolean isVideoAccessible, User user) {
+        this.fallDetectVideoUrl = fallDetectVideoUrl;
+        this.fallDetectTime = fallDetectTime;
+        this.isVideoAccessible = true;
+        this.user = user;
     }
 }
