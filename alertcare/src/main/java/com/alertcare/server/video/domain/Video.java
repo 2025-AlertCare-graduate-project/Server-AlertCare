@@ -31,6 +31,10 @@ public class Video {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    public void checkByUser() {
+        this.isCheckedByUser = true;
+    }
+
     @Builder
     public Video(String fallDetectVideoUrl, LocalDateTime fallDetectTime, boolean isVideoAccessible, boolean isCheckedByUser, User user) {
         this.fallDetectVideoUrl = fallDetectVideoUrl;

@@ -5,6 +5,7 @@ import com.alertcare.server.user.exception.UserErrorCode;
 import com.alertcare.server.user.exception.UserException;
 import com.alertcare.server.user.repository.UserRepository;
 import com.alertcare.server.video.domain.Video;
+import com.alertcare.server.video.dto.VideoCheckResponseDto;
 import com.alertcare.server.video.dto.VideoListResponseDto;
 import com.alertcare.server.video.dto.VideoRequestDto;
 import com.alertcare.server.video.exception.VideoErrorCode;
@@ -70,5 +71,15 @@ public class VideoService {
         }
 
         return video.getFallDetectVideoUrl();
+    }
+
+    public VideoCheckResponseDto checkVideo(Long id){
+        Video video = videoRepository.findById(id)
+                .orElseThrow(() -> new VideoException(VideoErrorCode.VIDEO_NOT_FOUND));
+
+        video.checkByUser();
+        videoRepository.save(video);
+
+        return new VideoCheckResponseDto(video.getId(), video.isCheckedByUser());
     }
 }
