@@ -1,6 +1,7 @@
 package com.alertcare.server.video.controller;
 
 import com.alertcare.server.common.response.BasicResponse;
+import com.alertcare.server.video.dto.VideoCheckResponseDto;
 import com.alertcare.server.video.dto.VideoListResponseDto;
 import com.alertcare.server.video.dto.VideoRequestDto;
 import com.alertcare.server.video.exception.VideoException;
@@ -37,5 +38,11 @@ public class VideoController {
         } catch (VideoException e) {
             return BasicResponse.error(e.getStatus(), e.getMessage());
         }
+    }
+
+    @PatchMapping("/{id}/check")
+    public BasicResponse<VideoCheckResponseDto> checkVideo(@PathVariable Long id){
+
+        return BasicResponse.success(200, "영상 확인 완료 처리 성공", videoService.checkVideo(id));
     }
 }
