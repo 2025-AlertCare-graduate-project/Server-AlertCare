@@ -23,12 +23,15 @@ public class Video {
 
     private boolean fallDetected;
 
+    private String detectedTime;
+
     private LocalDateTime createdAt;
 
     @Builder
-    public Video(String videoUrl, boolean fallDetected, LocalDateTime createdAt){
+    public Video(String videoUrl, boolean fallDetected, String detectedTime, LocalDateTime createdAt){
         this.videoUrl = videoUrl;
         this.fallDetected = fallDetected;
+        this.detectedTime = detectedTime;
         this.createdAt = createdAt;
     }
 }
