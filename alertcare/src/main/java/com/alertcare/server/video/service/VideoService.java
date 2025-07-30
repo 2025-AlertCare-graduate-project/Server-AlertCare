@@ -35,18 +35,19 @@ public class VideoService {
         videoRepository.save(video);
     }
 
-    public List<VideoListResponseDto> getVideoList() {
-        List<Video> videoList = videoRepository.findAll();
+    public List<VideoListResponseDto> getVideoList(String phoneNumber) {
+        User user = userRepository.findByCareReceiverPhoneNumber(phoneNumber)
+                .orElseThrow(() -> new UserException(UserErrorCode.MEMBER_NOT_FOUND));
+
+        List<Video> videoList = videoRepository.findByUser(user);
 
         return videoList.stream()
                 .map(video -> {
-                    // 48시간 지나면 만료
-                    boolean isExpired = video.getFallDetectTime().plusHours(48).isBefore(LocalDateTime.now());
-
                     return new VideoListResponseDto(
+                            video.getId(),
                             video.getFallDetectTime(),
-                            video.getFallDetectVideoUrl(),
-                            isExpired
+                            video.isVideoAccessible(),
+                            video.isCheckedByUser()
                     );
                 })
                 .collect(Collectors.toList());
