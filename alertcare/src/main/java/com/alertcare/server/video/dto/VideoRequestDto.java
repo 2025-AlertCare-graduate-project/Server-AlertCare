@@ -7,5 +7,6 @@ public class VideoRequestDto {
 
     private String videoUrl;
     private boolean fallDetected;
+    private String detectedTime;
 
 }

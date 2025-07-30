@@ -18,6 +18,7 @@ public class VideoService {
         Video video = Video.builder()
                 .videoUrl(dto.getVideoUrl())
                 .fallDetected(dto.isFallDetected())
+                .detectedTime(dto.getDetectedTime())
                 .createdAt(LocalDateTime.now())
                 .build();
 
