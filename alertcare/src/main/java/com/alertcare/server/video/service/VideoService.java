@@ -17,6 +17,7 @@ public class VideoService {
     public void saveVideo(VideoRequestDto dto){
         Video video = Video.builder()
                 .videoUrl(dto.getVideoUrl())
+                .phonenum(dto.getCareReceiverPhoneNumber())
                 .fallDetected(dto.isFallDetected())
                 .detectedTime(dto.getDetectedTime())
                 .createdAt(LocalDateTime.now())

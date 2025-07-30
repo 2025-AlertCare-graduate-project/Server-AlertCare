@@ -21,6 +21,8 @@ public class Video {
 
     private String videoUrl;
 
+    private String careReceiverPhoneNumber;
+
     private boolean fallDetected;
 
     private String detectedTime;
@@ -28,8 +30,9 @@ public class Video {
     private LocalDateTime createdAt;
 
     @Builder
-    public Video(String videoUrl, boolean fallDetected, String detectedTime, LocalDateTime createdAt){
+    public Video(String videoUrl,String phonenum, boolean fallDetected, String detectedTime, LocalDateTime createdAt){
         this.videoUrl = videoUrl;
+        this.careReceiverPhoneNumber = phonenum;
         this.fallDetected = fallDetected;
         this.detectedTime = detectedTime;
         this.createdAt = createdAt;
