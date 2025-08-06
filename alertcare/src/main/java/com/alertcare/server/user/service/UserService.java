@@ -49,8 +49,8 @@ public class UserService {
         }
     }
 
-    public User getProfile(ProfileRequestDTO profileRequestDTO) {
-        return userRepository.findByCareReceiverPhoneNumber(profileRequestDTO.getCareReceiverPhoneNumber())
+    public User getProfile(String phoneNumber) {
+        return userRepository.findByCareReceiverPhoneNumber(phoneNumber)
                 .orElseThrow(() -> new UserException(UserErrorCode.MEMBER_NOT_FOUND));
     }
 
