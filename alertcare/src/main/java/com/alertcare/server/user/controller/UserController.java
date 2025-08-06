@@ -7,9 +7,12 @@ import com.alertcare.server.user.dto.ProfileRequestDTO;
 import com.alertcare.server.user.dto.SignOutReqestDTO;
 import com.alertcare.server.user.dto.SignUpRequestDTO;
 import com.alertcare.server.user.service.UserService;
+import com.alertcare.server.video.dto.VideoListResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,10 +35,10 @@ public class UserController {
         return BasicResponse.success(200, "로그인 성공", user);
     }
 
-    @GetMapping("/profile")
+    @GetMapping("/profile/{phoneNumber}")
     @ResponseStatus(HttpStatus.OK)
-    public BasicResponse<User> getProfile(@RequestBody ProfileRequestDTO profileRequestDTO) {
-        User user = userService.getProfile(profileRequestDTO);
+    public BasicResponse<User> getProfile(@PathVariable String phoneNumber) {
+        User user = userService.getProfile(phoneNumber);
 
         return BasicResponse.success(200, "유저 조회 성공", user);
     }
