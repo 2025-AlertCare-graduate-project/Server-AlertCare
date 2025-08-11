@@ -9,5 +9,4 @@ public class SignUpRequestDTO {
     private String careGiverName;
     private String careReceiverName;
     private String careReceiverPhoneNumber;
-    private int careReceiverAge;
 }
