@@ -34,9 +34,6 @@ public class User {
     @Column(name = "care_receiver_phone_number", nullable = false, unique = true)
     private String careReceiverPhoneNumber;
 
-    @Column(name = "care_receiver_age", nullable = false)
-    private int careReceiverAge;
-
     @Column(unique = true)
     private String fcmToken;
 }

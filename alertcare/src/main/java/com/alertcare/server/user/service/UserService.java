@@ -27,7 +27,6 @@ public class UserService {
                 .careGiverName(signUpRequestDTO.getCareGiverName())
                 .careReceiverName(signUpRequestDTO.getCareReceiverName())
                 .careReceiverPhoneNumber(signUpRequestDTO.getCareReceiverPhoneNumber())
-                .careReceiverAge(signUpRequestDTO.getCareReceiverAge())
                 .build();
 
         return userRepository.save(user);
@@ -40,8 +39,7 @@ public class UserService {
         // 정보가 모두 일치 하면 user 반환
         if (
                 user.getCareGiverName().equals(loginRequestDTO.getCareGiverName()) &&
-                user.getCareReceiverName().equals(loginRequestDTO.getCareReceiverName()) &&
-                user.getCareReceiverAge() == loginRequestDTO.getCareReceiverAge()
+                user.getCareReceiverName().equals(loginRequestDTO.getCareReceiverName())
         ) {
             return user;
         } else {
