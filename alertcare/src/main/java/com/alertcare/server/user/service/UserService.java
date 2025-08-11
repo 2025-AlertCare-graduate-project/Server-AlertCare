@@ -27,6 +27,7 @@ public class UserService {
                 .careGiverName(signUpRequestDTO.getCareGiverName())
                 .careReceiverName(signUpRequestDTO.getCareReceiverName())
                 .careReceiverPhoneNumber(signUpRequestDTO.getCareReceiverPhoneNumber())
+                .careReceiverAge(signUpRequestDTO.getCareReceiverAge())
                 .build();
 
         return userRepository.save(user);
