@@ -5,6 +5,7 @@ import com.alertcare.server.user.exception.UserErrorCode;
 import com.alertcare.server.user.exception.UserException;
 import com.alertcare.server.user.repository.UserRepository;
 import com.alertcare.server.video.domain.Video;
+import com.alertcare.server.video.dto.VideoDetailResponseDto;
 import com.alertcare.server.video.dto.VideoCheckResponseDto;
 import com.alertcare.server.video.dto.VideoListResponseDto;
 import com.alertcare.server.video.dto.VideoRequestDto;
@@ -74,6 +75,22 @@ public class VideoService {
         }
 
         return video.getFallDetectVideoUrl();
+    }
+
+    public VideoDetailResponseDto getVideoDetail(Long id){
+        Video video = videoRepository.findById(id)
+                .orElseThrow(() -> new VideoException(VideoErrorCode.VIDEO_NOT_FOUND));
+
+        LocalDateTime fallTime = video.getFallDetectTime();
+        LocalDateTime now = LocalDateTime.now();
+
+        Duration duration = Duration.between(fallTime, now);
+
+        if (duration.toHours() >= 12) {
+            throw new VideoException(VideoErrorCode.VIDEO_ACCESS_EXPIRED);
+        }
+
+        return new VideoDetailResponseDto(video.getFallDetectVideoUrl(), video.getFallDetectTime());
     }
 
     public VideoCheckResponseDto checkVideo(Long id){
