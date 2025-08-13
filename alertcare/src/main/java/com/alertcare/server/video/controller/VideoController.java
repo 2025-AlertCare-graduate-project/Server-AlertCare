@@ -6,6 +6,7 @@ import com.alertcare.server.user.exception.UserErrorCode;
 import com.alertcare.server.user.exception.UserException;
 import com.alertcare.server.user.repository.UserRepository;
 import com.alertcare.server.video.dto.VideoCheckResponseDto;
+import com.alertcare.server.video.dto.VideoDetailResponseDto;
 import com.alertcare.server.video.dto.VideoListResponseDto;
 import com.alertcare.server.video.dto.VideoRequestDto;
 import com.alertcare.server.video.exception.VideoException;
@@ -46,13 +47,9 @@ public class VideoController {
     }
 
     @GetMapping("/{id}")
-    public BasicResponse<String> getVideo(@PathVariable Long id) {
-        try {
-            String videoUrl = videoService.getVideoUrl(id);
-            return BasicResponse.success(200, "영상 조회 성공", videoUrl);
-        } catch (VideoException e) {
-            return BasicResponse.error(e.getStatus(), e.getMessage());
-        }
+    public BasicResponse<VideoDetailResponseDto> getVideoDetail(@PathVariable Long id) {
+
+        return BasicResponse.success(200, "영상 조회 성공", videoService.getVideoDetail(id));
     }
 
     @PatchMapping("/{id}/check")
