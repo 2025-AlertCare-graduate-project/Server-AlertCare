@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,10 +33,13 @@ public class VideoService {
         User user = userRepository.findByCareReceiverPhoneNumber(dto.getCareReceiverPhoneNumber().trim())
                 .orElseThrow(() -> new UserException(UserErrorCode.MEMBER_NOT_FOUND));
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime detectedTime = LocalDateTime.parse(dto.getDetectedTime(), formatter);
+
         Video video = Video.builder()
                 .fallDetectVideoUrl(dto.getVideoUrl())
                 .user(user)
-                .fallDetectTime(LocalDateTime.now())
+                .fallDetectTime(detectedTime)
                 .build();
 
         videoRepository.save(video);

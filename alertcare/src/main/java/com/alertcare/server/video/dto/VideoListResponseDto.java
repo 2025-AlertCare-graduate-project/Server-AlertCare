@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class VideoListResponseDto {
     private Long id;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm", timezone = "Asia/Seoul")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm")
     private LocalDateTime fallDetectTime;
 
     private boolean isVideoAccessible;
