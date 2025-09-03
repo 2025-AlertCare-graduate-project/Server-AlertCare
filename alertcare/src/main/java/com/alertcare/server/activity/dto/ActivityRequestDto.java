@@ -5,10 +5,10 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
-public class VideoRequestDto {
+public class ActivityRequestDto {
 
     private String phoneNumber;
-    private LocalDateTime timestamp;
+    private String timestamp;
     private int activeTime;
     private int sittingTime;
     private int lyingTime;
