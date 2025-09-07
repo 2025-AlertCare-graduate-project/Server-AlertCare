@@ -33,13 +33,13 @@ public class ActivityService {
             timestamp = LocalDateTime.now();
         }
 
-        Activity activity = new Activity(
-                user,
-                timestamp,
-                dto.getActiveTime(),
-                dto.getSittingTime(),
-                dto.getLyingTime()
-        );
+        Activity activity = Activity.builder()
+                .user(user)
+                .timestamp(timestamp)
+                .activeTime(dto.getActiveTime())
+                .sittingTime(dto.getSittingTime())
+                .lyingTime(dto.getLyingTime())
+                .build();
 
         activityRepository.save(activity);
     }

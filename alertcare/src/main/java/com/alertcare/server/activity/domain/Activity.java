@@ -2,6 +2,7 @@ package com.alertcare.server.activity.domain;
 
 import com.alertcare.server.user.domain.User;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -27,6 +28,7 @@ public class Activity {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Builder
     public Activity(User user, LocalDateTime timestamp, int activeTime, int sittingTime, int lyingTime) {
         this.user = user;
         this.timestamp = timestamp;
