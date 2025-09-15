@@ -2,8 +2,11 @@ package com.alertcare.server.summary.service;
 
 import com.alertcare.server.activity.repository.ActivityRepository;
 import com.alertcare.server.summary.domain.Summary;
+import com.alertcare.server.summary.dto.SummaryResponseDto;
 import com.alertcare.server.summary.repository.SummaryRepository;
 import com.alertcare.server.user.domain.User;
+import com.alertcare.server.user.exception.UserErrorCode;
+import com.alertcare.server.user.exception.UserException;
 import com.alertcare.server.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -49,8 +52,27 @@ public class SummaryService {
             summaryRepository.save(summary);
         }
 
-        System.out.println("Daily summary finished for date: " + date);
-
     }
+    public SummaryResponseDto getDailySummary(String phoneNumber, LocalDate date){
+        User user = userRepository.findByCareReceiverPhoneNumber(phoneNumber)
+                .orElseThrow(() -> {
+                    System.out.println("User not found for phoneNumber: " + phoneNumber);
+                    return new UserException(UserErrorCode.MEMBER_NOT_FOUND);
+                });
 
+        Summary summary = summaryRepository.findByUserIdAndDate(user.getId(), date)
+                .orElseThrow(() -> {
+                    System.out.println("Summary not found for userId: " + user.getId() + ", date: " + date);
+                    return new IllegalArgumentException("해당 날짜의 Summary가 존재하지 않습니다.");
+                });
+
+        return SummaryResponseDto.builder()
+                .id(summary.getId())
+                .userId(summary.getUser().getId())
+                .activeTime(summary.getActiveTime())
+                .sittingTime(summary.getSittingTime())
+                .lyingTime(summary.getLyingTime())
+                .date(summary.getDate())
+                .build();
+    }
 }
