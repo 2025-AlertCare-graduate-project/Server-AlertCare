@@ -32,12 +32,15 @@ public class Summary {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    private String dailySummaryText;
+
     @Builder
-    public Summary(User user, LocalDate date, int activeTime, int sittingTime, int lyingTime) {
+    public Summary(User user, LocalDate date, int activeTime, int sittingTime, int lyingTime, String dailySummaryText) {
         this.user = user;
         this.date = date;
         this.activeTime = activeTime;
         this.sittingTime = sittingTime;
         this.lyingTime = lyingTime;
+        this.dailySummaryText = dailySummaryText;
     }
 }

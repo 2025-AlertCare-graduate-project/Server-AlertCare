@@ -73,6 +73,7 @@ public class SummaryService {
                 .sittingTime(summary.getSittingTime())
                 .lyingTime(summary.getLyingTime())
                 .date(summary.getDate())
+                .dailySummaryText(summary.getDailySummaryText())
                 .build();
     }
 }
