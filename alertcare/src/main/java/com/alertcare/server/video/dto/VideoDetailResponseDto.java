@@ -13,4 +13,6 @@ public class VideoDetailResponseDto {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm")
     private LocalDateTime fallDetectTime;
+
+    private String careReceiverPhoneNumber;
 }

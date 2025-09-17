@@ -16,4 +16,5 @@ public class SummaryResponseDto {
     private int lyingTime;
     private int sittingTime;
     private LocalDate date;
+    private String dailySummaryText;
 }

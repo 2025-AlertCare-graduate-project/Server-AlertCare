@@ -47,7 +47,7 @@ public class VideoController {
     }
 
     @GetMapping("/{id}")
-    public BasicResponse<VideoDetailResponseDto> getVideoDetail(@PathVariable Long id) {
+    public BasicResponse<VideoDetailResponseDto> getVideoDetail(@PathVariable("id") Long id) {
 
         return BasicResponse.success(200, "영상 조회 성공", videoService.getVideoDetail(id));
     }

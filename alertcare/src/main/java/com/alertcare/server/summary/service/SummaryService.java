@@ -1,6 +1,7 @@
 package com.alertcare.server.summary.service;
 
 import com.alertcare.server.activity.repository.ActivityRepository;
+import com.alertcare.server.openai.service.OpenAiSummaryService;
 import com.alertcare.server.summary.domain.Summary;
 import com.alertcare.server.summary.dto.SummaryResponseDto;
 import com.alertcare.server.summary.repository.SummaryRepository;
@@ -24,6 +25,7 @@ public class SummaryService {
     private final SummaryRepository summaryRepository;
     private final ActivityRepository activityRepository;
     private final UserRepository userRepository;
+    private final OpenAiSummaryService openAiSummaryService;
 
     @Scheduled(cron = "0 0 0 * * *")
     @Transactional
@@ -41,12 +43,15 @@ public class SummaryService {
             int sittingSum = ((Number) result[1]).intValue();
             int lyingSum = ((Number) result[2]).intValue();
 
+            String dailySummaryText = openAiSummaryService.generateDailySummary(activeSum, sittingSum, lyingSum);
+
             Summary summary = Summary.builder()
                     .user(user)
                     .date(date)
                     .activeTime(activeSum)
                     .sittingTime(sittingSum)
                     .lyingTime(lyingSum)
+                    .dailySummaryText(dailySummaryText)
                     .build();
 
             summaryRepository.save(summary);
@@ -73,6 +78,7 @@ public class SummaryService {
                 .sittingTime(summary.getSittingTime())
                 .lyingTime(summary.getLyingTime())
                 .date(summary.getDate())
+                .dailySummaryText(summary.getDailySummaryText())
                 .build();
     }
 }
