@@ -94,7 +94,7 @@ public class VideoService {
             throw new VideoException(VideoErrorCode.VIDEO_ACCESS_EXPIRED);
         }
 
-        return new VideoDetailResponseDto(video.getFallDetectVideoUrl(), video.getFallDetectTime());
+        return new VideoDetailResponseDto(video.getFallDetectVideoUrl(), video.getFallDetectTime(), video.getUser().getCareReceiverPhoneNumber());
     }
 
     public VideoCheckResponseDto checkVideo(Long id){
