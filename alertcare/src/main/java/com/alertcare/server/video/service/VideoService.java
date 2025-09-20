@@ -74,7 +74,7 @@ public class VideoService {
 
         Duration duration = Duration.between(fallTime, now);
 
-        if (duration.toHours() >= 12) {
+        if (duration.toHours() >= 24) {
             throw new VideoException(VideoErrorCode.VIDEO_ACCESS_EXPIRED);
         }
 
@@ -90,7 +90,7 @@ public class VideoService {
 
         Duration duration = Duration.between(fallTime, now);
 
-        if (duration.toHours() >= 12) {
+        if (duration.toHours() >= 24) {
             throw new VideoException(VideoErrorCode.VIDEO_ACCESS_EXPIRED);
         }
 
@@ -113,7 +113,7 @@ public class VideoService {
     }
 
     private void disableExpiredVideo() {
-        LocalDateTime threshold = LocalDateTime.now().minusHours(12);
+        LocalDateTime threshold = LocalDateTime.now().minusHours(24);
         List<Video> expiredVideos = videoRepository.findVideosToDisable(threshold);
 
         for (Video video : expiredVideos) {
