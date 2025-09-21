@@ -9,13 +9,20 @@ import com.alertcare.server.video.dto.VideoCheckResponseDto;
 import com.alertcare.server.video.dto.VideoDetailResponseDto;
 import com.alertcare.server.video.dto.VideoListResponseDto;
 import com.alertcare.server.video.dto.VideoRequestDto;
-import com.alertcare.server.video.exception.VideoException;
 import com.alertcare.server.video.service.VideoService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/videos")
 @RequiredArgsConstructor
@@ -26,7 +33,7 @@ public class VideoController {
     private final UserRepository userRepository;
 
     @PostMapping
-    public String receiveVideo(@RequestBody VideoRequestDto dto){
+    public String receiveVideo(@RequestBody VideoRequestDto dto) {
         videoService.saveVideo(dto);
         try {
             String fcmToken = userRepository.findByCareReceiverPhoneNumber(dto.getCareReceiverPhoneNumber())
@@ -53,7 +60,7 @@ public class VideoController {
     }
 
     @PatchMapping("/{id}/check")
-    public BasicResponse<VideoCheckResponseDto> checkVideo(@PathVariable Long id){
+    public BasicResponse<VideoCheckResponseDto> checkVideo(@PathVariable Long id) {
 
         return BasicResponse.success(200, "영상 확인 완료 처리 성공", videoService.checkVideo(id));
     }
