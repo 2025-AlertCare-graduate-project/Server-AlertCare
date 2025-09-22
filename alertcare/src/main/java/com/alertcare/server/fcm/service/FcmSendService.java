@@ -37,9 +37,12 @@ public class FcmSendService {
         Map<String, Object> message = Map.of(
                 "message", Map.of(
                         "token", targetToken,
-                        "notification", Map.of(
+                        "data", Map.of(
                                 "title", title,
                                 "body", body
+                        ),
+                        "android", Map.of(
+                                "priority", "high"
                         )
                 )
         );
@@ -47,6 +50,6 @@ public class FcmSendService {
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(message, headers);
         ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
 
-        System.out.println("FCM" + response.getBody());
+        System.out.println("FCM Response: " + response.getBody());
     }
 }
