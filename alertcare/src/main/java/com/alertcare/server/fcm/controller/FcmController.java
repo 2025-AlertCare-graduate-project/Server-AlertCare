@@ -48,4 +48,16 @@ public class FcmController {
         fcmSendService.sendMessage(token, title, body);
         return BasicResponse.success(ResponseMessage.FCM_PUSH_SUCCESS, null);
     }
+
+    // test용
+    @PostMapping("/test/send")
+    public BasicResponse<String> sendReportPush(@RequestBody FcmSendRequestDTO request) throws IOException {
+        String token = fcmTokenService.getToken(request.userId());
+
+        String title = "일일 활동 리포트가 준비되었습니다";
+        String body = "김옥순님의 어제 활동을 확인해보세요";
+
+        fcmSendService.sendMessage(token, title, body);
+        return BasicResponse.success(ResponseMessage.FCM_PUSH_SUCCESS, null);
+    }
 }
